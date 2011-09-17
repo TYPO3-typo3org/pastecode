@@ -179,7 +179,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 
 		$marker['###TITLE###'] = htmlspecialchars($row['title']);
 		$marker['###DESCRIPTION###'] = nl2br(htmlspecialchars($row['description']));
-		$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormatWithMonthName'], $row['crdate']);
+		$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormat'], $row['crdate']);
 		$GLOBALS['TSFE']->ATagParams = 'title = "edit snippet"';
 		if($GLOBALS['TSFE']->fe_user->user['name'] == $row['poster']) {
 			$marker['###EDIT###'] = $this->cObj->stdWrap($this->pi_linkToPage($this->pi_getLL('edit snippet'), $this->conf['general.']['newsnippetPid'], '', array($this->pastecodePi2->prefixId . '[edit]' => $row['uid'])), $this->conf['general.']['editsnippet_stdWrap.']);
@@ -354,7 +354,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 			$marker['###CLASS###'] = $row['problem'] ? 'snippet-problem' : 'snippet-ok';
 			$marker['###TITLE###'] = $row['title'];
 			$marker['###POSTER###'] = $row['poster'];
-			$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormatWithMonthName'], $row['crdate']);
+			$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormat'], $row['crdate']);
 
 			$marker['###LANGUAGE###'] = $this->getLanguageLink($row['language']);
 			$rating = $this->ratings ? $this->ratings->getRatingArray('tx_pastecode_pi1' . intval($row['uid'])) : array();
@@ -492,7 +492,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 
 			$marker['###TITLE###'] = $row['title'];
 			$marker['###POSTER###'] = $row['poster'];
-			$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormatWithMonthName'], $row['crdate']);
+			$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormat'], $row['crdate']);
 			$marker['###LANGUAGE###'] = $this->getLanguageLink($row['language']);
 			$marker['###DESCRIPTION###'] = htmlspecialchars($row['description']);
 			$this->markerHook($marker, $row);
