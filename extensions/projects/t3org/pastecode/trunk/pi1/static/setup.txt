@@ -33,8 +33,12 @@ plugin.tx_pastecode_pi1 {
 	display: none;
 }
 )
-
 }
+
+# Prevent caching on searching snippets
+[globalVar = GP:tx_pastecode_pi1|search > 0]
+plugin.tx_pastecode_pi1 = USER_INT
+[global]
 
 snippetRSS = PAGE
 snippetRSS {

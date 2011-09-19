@@ -46,7 +46,6 @@ class tx_pastecode_pi1 extends tslib_pibase {
 	var $prefixId = 'tx_pastecode_pi1'; // Same as class name
 	var $scriptRelPath = 'pi1/class.tx_pastecode_pi1.php'; // Path to this script relative to the extension dir.
 	var $extKey = 'pastecode'; // The extension key.
-	var $pi_checkCHash = true;
 	var $storagePid;
 	var $pid;
 
@@ -69,6 +68,10 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
+
+		if(!$this->piVars['search']) {
+			$this->pi_checkCHash = true;
+		}
 
 		// Flexform config
 		$this->pi_initPIflexForm();
@@ -159,7 +162,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 
 		$totalSubpart = $this->cObj->getSubpart($this->template, '###SINGLESNIPPET###');
 
-		$marker['###OVERVIEW_URL###'] = $this->pi_getPageLink($GLOBALS['TSFE']->id);
+		$marker['###OVERVIEW_URL###'] = $this->pi_getPageLink($this->conf['general.']['snippetPid']);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'*',
 			'tx_pastecode_code',
