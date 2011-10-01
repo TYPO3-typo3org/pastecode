@@ -5,6 +5,8 @@ plugin.tx_pastecode_pi1 {
 		newsnippetPid = {$plugin.tx_pastecode_pi1.general.newsnippetPid}
 		displayMode = {$plugin.tx_pastecode_pi1.general.displayMode}
 		languages = {$plugin.tx_pastecode_pi1.general.languages}
+		browsertitle_stdWrap.noTrimWrap = |{page:title}: ||
+		browsertitle_stdWrap.insertData = 1
 		newsnippet_stdWrap.wrap = <p>|</p>
 		editsnippet_stdWrap.wrap = <p>|</p>
 		showall_stdWrap.wrap = <p>|</p>

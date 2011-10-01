@@ -170,6 +170,10 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		);
 
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+
+		// set browser title
+		$GLOBALS['TSFE']->page['title'] = $this->cObj->stdWrap($row['title'], $this->conf['general.']['browsertitle_stdWrap.']);
+
 		$marker['###CLASS###'] = $row['problem'] ? 'snippet-problem' : 'snippet-ok';
 		$marker['###CODE###'] = $this->highLight($row['code'], $row['language']);
 		$marker['###CODE_PLAIN###'] = $row['code'];
