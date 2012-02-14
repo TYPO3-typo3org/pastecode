@@ -359,8 +359,8 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		foreach($rows as $row) {
 			$subpartArray['###LINK_ITEM###'] = explode('explode-here', $this->pi_linkTP('explode-here', array($this->prefixId . '[code]' => $row['uid']), 1));
 			$marker['###CLASS###'] = $row['problem'] ? 'snippet-problem' : 'snippet-ok';
-			$marker['###TITLE###'] = $row['title'];
-			$marker['###POSTER###'] = $row['poster'];
+			$marker['###TITLE###'] = htmlspecialchars($row['title']);
+			$marker['###POSTER###'] = htmlspecialchars($row['poster']);
 			$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormat'], $row['crdate']);
 
 			$marker['###LANGUAGE###'] = $this->getLanguageLink($row['language']);
@@ -497,8 +497,8 @@ class tx_pastecode_pi1 extends tslib_pibase {
 			$marker['###HREFRSS###'] = 'snippets/c/' . $row['uid'] . '/';
 			$marker['###BASEURL###'] = $this->conf['baseURL'];
 
-			$marker['###TITLE###'] = $row['title'];
-			$marker['###POSTER###'] = $row['poster'];
+			$marker['###TITLE###'] = htmlspecialchars($row['title']);
+			$marker['###POSTER###'] = htmlspecialchars($row['poster']);
 			$marker['###DATE###'] = strftime($GLOBALS['TSFE']->tmpl->setup['languagesetting.']['dateFormat'], $row['crdate']);
 			$marker['###LANGUAGE###'] = $this->getLanguageLink($row['language']);
 			$marker['###DESCRIPTION###'] = htmlspecialchars($row['description']);
@@ -647,15 +647,15 @@ class tx_pastecode_pi1 extends tslib_pibase {
 	 * @return string: HTML code (link)
 	 */
 	protected function getLanguageLink($language) {
-		$GLOBALS['TSFE']->ATagParams = 'title="show all snippets of language ' . $language . '"';
+		$GLOBALS['TSFE']->ATagParams = 'title="show all snippets of language ' . htmlspecialchars($language) . '"';
 		if($this->conf['snippets.']['linkLanguage']) {
 			$link = $this->pi_linkTP(
-				$language,
+				htmlspecialchars($language),
 				array($this->prefixId . '[language]' => urlencode($language)),
 				1
 			);
 		} else {
-			$link = $language;
+			$link = htmlspecialchars($language);
 		}
 		$GLOBALS['TSFE']->ATagParams = '';
 		return $link;
