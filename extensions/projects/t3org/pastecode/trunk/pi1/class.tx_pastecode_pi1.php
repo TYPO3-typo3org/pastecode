@@ -176,7 +176,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 
 		$marker['###CLASS###'] = $row['problem'] ? 'snippet-problem' : 'snippet-ok';
 		$marker['###CODE###'] = $this->highLight($row['code'], $row['language']);
-		$marker['###CODE_PLAIN###'] = $row['code'];
+		$marker['###CODE_PLAIN###'] = htmlspecialchars($row['code']);
 		$marker['###COPY_TO_CLIPBOARD###'] = '';
 
 		$marker['###POSTER###'] = htmlspecialchars($row['poster']);
@@ -239,7 +239,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 			$marker['###CLIPBOARD_PATH_JS###'] = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['single.']['pathToZeroClipboardJS']);
 			$marker['###CLIPBOARD_PATH_SWF###'] = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['single.']['pathToZeroClipboardSWF']);
 			$marker['###CODE_CLIPBOARD###'] = str_replace(array(PHP_EOL, "'"), array('\n', "\'"), $row['code']);
-			$marker['###CODE_CLIPBOARD###'] = $row['code'];
+			$marker['###CODE_CLIPBOARD###'] = htmlspecialchars($row['code']);
 			$subpart['###CLIPBOARD###'] = $this->cObj->substituteMarkerArray($clipboardSubpart, $marker);
 		}
 
