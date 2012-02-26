@@ -166,9 +166,8 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'*',
 			'tx_pastecode_code',
-			'uid=' . intval($id) . $this->cObj->enableFields('tx_pastecode_code')
+			'uid = ' . intval($id) . $this->cObj->enableFields('tx_pastecode_code')
 		);
-
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 
 		// set browser title
@@ -257,7 +256,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'count(*) anz, poster',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code'),
+			'pid = ' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code'),
 			'poster',
 			'anz desc'
 		);
@@ -286,11 +285,11 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		if($this->piVars['tag']) {
 			$marker['###HEADER###'] = sprintf($this->pi_getLL('header_snippets_with_tag'), htmlspecialchars(urldecode($this->piVars['tag'])));
 			$marker['###SHOWALL###'] = $this->pi_getLL('clear filters');
-			$addWhere .= ' AND FIND_IN_SET("' . urldecode($this->piVars['tag']) . '", tags)>0';
+			$addWhere .= ' AND FIND_IN_SET("' . $GLOBALS['TYPO3_DB']->quoteStr(urldecode($this->piVars['tag']), 'tx_pastecode_code') . '", tags) > 0';
 		} elseif($this->piVars['author']) {
 			$marker['###HEADER###'] = sprintf($this->pi_getLL('header_snippets_from_author'), htmlspecialchars(urldecode($this->piVars['author'])));
 			$marker['###SHOWALL###'] = ($this->conf['authorlist'] ? $this->pi_getLL('back to author list') : $this->pi_getLL('clear filters'));
-			$addWhere .= ' AND poster="' . urldecode($this->piVars['author']) . '"';
+			$addWhere .= ' AND poster="' . $GLOBALS['TYPO3_DB']->quoteStr(urldecode($this->piVars['author']), 'tx_pastecode_code') . '"';
 		} elseif($this->piVars['sword'] || $this->piVars['language']) {
 			if(!$this->piVars['sword']) {
 				$marker['###HEADER###'] = sprintf($this->pi_getLL('header_snippets_language'), htmlspecialchars(urldecode($this->piVars['language'])));
@@ -302,7 +301,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 			$marker['###SHOWALL###'] = $this->pi_getLL('clear filters');
 
 			if($this->piVars['language']) {
-				$addWhere .= ' AND language="' . urldecode($this->piVars['language']) . '"';
+				$addWhere .= ' AND language="' . $GLOBALS['TYPO3_DB']->quoteStr(urldecode($this->piVars['language']), 'tx_pastecode_code') . '"';
 			}
 			$sword = addslashes(str_replace("'", '', $this->piVars['sword']));
 			if($sword) {
@@ -331,7 +330,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'count(*)',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
+			'pid = ' . $this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
 			'',
 			'title'
 		);
@@ -341,7 +340,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'*',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
+			'pid = ' . $this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
 			'',
 			$order,
 			intval($this->piVars['page']) * $this->conf['snippets.']['limit'] . ',' . $this->conf['snippets.']['limit']
@@ -420,7 +419,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'*',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code')
+			'pid = ' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code')
 		);
 		$t = array();
 		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
@@ -485,14 +484,14 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'*',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code'),
+			'pid = ' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code'),
 			'',
 			'crdate desc',
 			intval($count)
 		);
 
 		$rows = '';
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$marker['###HREF###'] = $this->cObj->lastTypoLinkUrl;
 			$marker['###HREFRSS###'] = 'snippets/c/' . $row['uid'] . '/';
 			$marker['###BASEURL###'] = $this->conf['baseURL'];
@@ -512,10 +511,10 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'*',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code')
+			'pid = ' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code')
 		);
 		$t = array();
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$t[$row['language']]++;
 		}
 		#sort($t);
@@ -549,12 +548,12 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'rating, vote_count, (rating/vote_count) q, substring(reference,17) sid',
 			'tx_ratings_data',
-			'vote_count>0 and left(reference,16) = "tx_pastecode_pi1"',
+			'vote_count > 0 and left(reference,16) = "tx_pastecode_pi1"',
 			'',
 			'q desc',
 			'25'
 		);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$result['ids'][] = $row['sid'];
 			$result['top'][] = $row;
 		}
@@ -634,7 +633,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'count(*)',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . ' AND poster="' . $user . '"' . $this->cObj->enableFields('tx_pastecode_code')
+			'pid = ' . $this->storagePid . ' AND poster = "' . $user . '"' . $this->cObj->enableFields('tx_pastecode_code')
 		);
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
 		return $row[0];

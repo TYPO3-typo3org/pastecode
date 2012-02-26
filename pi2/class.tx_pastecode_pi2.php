@@ -134,10 +134,19 @@ class tx_pastecode_pi2 extends tslib_pibase {
 				);
 
 				if ($this->piVars['edit']) {
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_pastecode_code', 'uid=' . intval($this->piVars['edit']), $fields_values);
+					$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+						'tx_pastecode_code',
+						'uid=' . intval($this->piVars['edit']),
+						$fields_values,
+						$no_quote_fields = FALSE
+					);
 				} else {
 					$fields_values['crdate'] = time();
-					$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_pastecode_code', $fields_values, $no_quote_fields = FALSE);
+					$GLOBALS['TYPO3_DB']->exec_INSERTquery(
+						'tx_pastecode_code',
+						$fields_values,
+						$no_quote_fields = FALSE
+					);
 				}
 				// clear cache
 				$GLOBALS['TSFE']->clearPageCacheContent_pidList($this->conf['general.']['snippetPid']);
@@ -187,7 +196,7 @@ class tx_pastecode_pi2 extends tslib_pibase {
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'*',
 			'tx_pastecode_code',
-			'pid=' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code')
+			'pid = ' . $this->storagePid . $this->cObj->enableFields('tx_pastecode_code')
 		);
 		foreach($rows as $row) {
 			if($row['tags']) {
@@ -200,7 +209,7 @@ class tx_pastecode_pi2 extends tslib_pibase {
 		$t = array_unique($t);
 		sort($t);
 		$options[] = '<option value=""></option>';
-		foreach ($t as $tag) {
+		foreach($t as $tag) {
 			$options[] = '<option value="' . htmlspecialchars($tag) . '" onclick="addTag(\'' . htmlspecialchars($tag) . '\');">' . htmlspecialchars($tag) . '</option>';
 		}
 		return implode('', $options);
