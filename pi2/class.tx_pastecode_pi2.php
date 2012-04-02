@@ -64,7 +64,7 @@ class tx_pastecode_pi2 extends tslib_pibase {
 
 		// user has to be logged in to add new snippets
 		if(!$GLOBALS['TSFE']->loginUser) {
-			return $this->cObj->stdWrap($this->pi_getLL('error_login'), $this->conf['general.']['error_stdWrap.']);
+			return $this->cObj->stdWrap($this->pi_getLL('error_login'), $this->conf['general.']['notLoggedIn_stdWarp.']);
 		} else {
 			return $this->pi_wrapInBaseClass($this->newCode());
 		}
