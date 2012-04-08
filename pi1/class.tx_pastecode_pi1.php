@@ -303,7 +303,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 			if($this->piVars['language']) {
 				$addWhere .= ' AND language="' . $GLOBALS['TYPO3_DB']->quoteStr(urldecode($this->piVars['language']), 'tx_pastecode_code') . '"';
 			}
-			$sword = addslashes(str_replace("'", '', $this->piVars['sword']));
+			$sword = $GLOBALS['TYPO3_DB']->quoteStr($this->piVars['sword'], 'tx_pastecode_code');
 			if($sword) {
 				$addWhere .= ' AND (title LIKE "%' . $GLOBALS['TYPO3_DB']->escapeStrForLike($sword, 'tx_pastecode_code') . '%"';
 				$addWhere .= ' OR description LIKE "%' . $GLOBALS['TYPO3_DB']->escapeStrForLike($sword, 'tx_pastecode_code') . '%")';
@@ -318,7 +318,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		} elseif ($this->conf['my_snippets'] || ($this->piVars['my_snippets'] && $GLOBALS['TSFE']->fe_user->user['uid'])) {
 			$marker['###HEADER###'] = 'My snippets';
 			$order = 'crdate';
-			$addWhere .= ' AND poster="' . $GLOBALS['TYPO3_DB']->quoteStr($GLOBALS['TSFE']->fe_user->user['name'], 'tx_pastecode_code') . '"';
+			$addWhere .= ' AND poster=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($GLOBALS['TSFE']->fe_user->user['name'], 'tx_pastecode_code');
 		} else {
 			$marker['###HEADER###'] = 'Snippets';
 		}
@@ -330,7 +330,7 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'count(*)',
 			'tx_pastecode_code',
-			'pid = ' . $this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
+			'pid = ' . (int)$this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
 			'',
 			'title'
 		);
@@ -340,18 +340,18 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'*',
 			'tx_pastecode_code',
-			'pid = ' . $this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
+			'pid = ' . (int)$this->storagePid . $addWhere . $this->cObj->enableFields('tx_pastecode_code'),
 			'',
 			$order,
-			(int)$this->piVars['page'] * $this->conf['snippets.']['limit'] . ',' . $this->conf['snippets.']['limit']
+			(int)$this->piVars['page'] * (int)$this->conf['snippets.']['limit'] . ',' . (int)$this->conf['snippets.']['limit']
 		);
 
 		// render pagebrowser
-		$marker['###BROWSE_LINKS###'] = $this->getListGetPageBrowser(ceil($count/$this->conf['snippets.']['limit']));
+		$marker['###BROWSE_LINKS###'] = $this->getListGetPageBrowser(ceil($count/(int)$this->conf['snippets.']['limit']));
 
 		$marker['###PB_TOTAL###'] = $count;
-		$marker['###PB_START###'] = (int)$this->piVars['page'] * $this->conf['snippets.']['limit'] + 1;
-		$marker['###PB_END###'] = intval($marker['###PB_START###'] + $this->conf['snippets.']['limit']) < $count
+		$marker['###PB_START###'] = (int)$this->piVars['page'] * (int)$this->conf['snippets.']['limit'] + 1;
+		$marker['###PB_END###'] = intval($marker['###PB_START###'] + (int)$this->conf['snippets.']['limit']) < $count
 				? intval($marker['###PB_START###'] + $this->conf['snippets.']['limit']) : $count;
 
 		$subpart['###OROW###'] = '';
