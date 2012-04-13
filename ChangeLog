@@ -1,3 +1,7 @@
+2012-04-13 Sven Burkert <bedienung@sbtheke.de>
+	* Fix bug #35853
+	* Fix caching issue: #35778
+
 2012-03-31 Sven Burkert <bedienung@sbtheke.de>
 	* User has to be logged in to add new snippets (spam protection)
 

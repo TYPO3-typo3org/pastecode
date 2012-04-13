@@ -50,7 +50,7 @@
 <!-- ###CLIPBOARD### -->
 <div id="d_clip_container">
 	<div id="d_clip_button" class="bu bu-mini">###LL_COPY_TO_CLIPBOARD###</div>
-	<div id="d_clip_text">###CODE_CLIPBOARD###</div>
+	<textarea id="d_clip_text">###CODE_CLIPBOARD###</textarea>
 </div>
 <script type="text/javascript" src="###CLIPBOARD_PATH_JS###"></script>
 <script type="text/javascript">
@@ -59,7 +59,7 @@
 	clip.setHandCursor(true);
 	clip.glue('d_clip_text', 'd_clip_container');
 	clip.addEventListener('mouseDown', function(client) {
-		client.setText($('#d_clip_text').html());
+		client.setText($('#d_clip_text').text());
 	}
 );
 </script>
