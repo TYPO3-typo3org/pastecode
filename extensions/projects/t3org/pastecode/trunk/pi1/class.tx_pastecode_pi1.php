@@ -50,14 +50,6 @@ class tx_pastecode_pi1 extends tslib_pibase {
 	var $pid;
 
 	/**
-	 * Init function, mainly to be called from other extensions to use the functions from this extension
-	 */
-	/*function init() {
-		$this->pi_setPiVarDefaults();
-		$this->pi_loadLL();
-	}*/
-
-	/**
 	 * The main method of the PlugIn
 	 *
 	 * @param	string		$content: The PlugIn content
@@ -68,10 +60,6 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
-
-		if(!$this->piVars['search']) {
-			$this->pi_checkCHash = true;
-		}
 
 		// Flexform config
 		$this->pi_initPIflexForm();
@@ -237,8 +225,9 @@ class tx_pastecode_pi1 extends tslib_pibase {
 			$clipboardSubpart = $this->cObj->getSubpart($totalSubpart, '###CLIPBOARD###');
 			$marker['###CLIPBOARD_PATH_JS###'] = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['single.']['pathToZeroClipboardJS']);
 			$marker['###CLIPBOARD_PATH_SWF###'] = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['single.']['pathToZeroClipboardSWF']);
-			$marker['###CODE_CLIPBOARD###'] = str_replace(array(PHP_EOL, "'"), array('\n', "\'"), $row['code']);
-			$marker['###CODE_CLIPBOARD###'] = htmlspecialchars($row['code']);
+			#$marker['###CODE_CLIPBOARD###'] = str_replace(array(PHP_EOL, "'"), array('\n', "\'"), $row['code']);
+			#$marker['###CODE_CLIPBOARD###'] = htmlspecialchars($row['code']);
+			$marker['###CODE_CLIPBOARD###'] = $row['code'];
 			$subpart['###CLIPBOARD###'] = $this->cObj->substituteMarkerArray($clipboardSubpart, $marker);
 		}
 
