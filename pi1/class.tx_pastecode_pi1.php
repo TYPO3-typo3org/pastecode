@@ -221,13 +221,12 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		$marker += $this->prepareLLArray('EXT:pastecode/pi1/locallang.xml', $this);
 
 		$subpart['###CLIPBOARD###'] = '';
-		if($this->conf['single.']['pathToZeroClipboardJS'] && $this->conf['single.']['pathToZeroClipboardJS']) {
+		if($this->conf['single.']['pathToZeroClipboardJS'] && $this->conf['single.']['pathToZeroClipboardSWF']) {
 			$clipboardSubpart = $this->cObj->getSubpart($totalSubpart, '###CLIPBOARD###');
 			$marker['###CLIPBOARD_PATH_JS###'] = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['single.']['pathToZeroClipboardJS']);
 			$marker['###CLIPBOARD_PATH_SWF###'] = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['single.']['pathToZeroClipboardSWF']);
 			#$marker['###CODE_CLIPBOARD###'] = str_replace(array(PHP_EOL, "'"), array('\n', "\'"), $row['code']);
-			#$marker['###CODE_CLIPBOARD###'] = htmlspecialchars($row['code']);
-			$marker['###CODE_CLIPBOARD###'] = $row['code'];
+			$marker['###CODE_CLIPBOARD###'] = htmlspecialchars($row['code']);
 			$subpart['###CLIPBOARD###'] = $this->cObj->substituteMarkerArray($clipboardSubpart, $marker);
 		}
 

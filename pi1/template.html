@@ -59,7 +59,7 @@
 	clip.setHandCursor(true);
 	clip.glue('d_clip_text', 'd_clip_container');
 	clip.addEventListener('mouseDown', function(client) {
-		client.setText($('#d_clip_text').text());
+		client.setText($('textarea#d_clip_text').val());
 	}
 );
 </script>
