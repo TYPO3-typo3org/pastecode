@@ -1,3 +1,6 @@
+2012-04-23 Sven Burkert <bedienung@sbtheke.de>
+	* Bugfix: Caching Issue
+
 2012-04-13 Sven Burkert <bedienung@sbtheke.de>
 	* Fix bug #35853
 	* Fix caching issue: #35778
