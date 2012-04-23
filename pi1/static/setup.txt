@@ -38,7 +38,7 @@ plugin.tx_pastecode_pi1 {
 }
 
 // Prevent caching on searching snippets
-[globalString = GP:tx_pastecode_pi1|sword = /(.+)/]
+[globalString = GP:tx_pastecode_pi1|sword = /(.+)/] OR [globalString = GP:tx_pastecode_pi1|language = /(.+)/]
 plugin.tx_pastecode_pi1 = USER_INT
 [global]
 
