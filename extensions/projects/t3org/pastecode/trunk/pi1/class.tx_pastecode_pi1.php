@@ -580,14 +580,16 @@ class tx_pastecode_pi1 extends tslib_pibase {
 		// Modify this configuration
 		$conf['pageParameterName'] = $this->prefixId . '|page';
 		$conf['numberOfPages'] = $numberOfPages;
+		$conf['extraQueryString'] = '';
+
 		if($this->piVars['sword']) {
-			$conf['extraQueryString'] = '&' . $this->prefixId . '[sword]=' . $this->piVars['sword'];
+			$conf['extraQueryString'] .= '&' . $this->prefixId . '[sword]=' . $this->piVars['sword'];
 		}
 		if($this->piVars['language']) {
-			$conf['extraQueryString'] = '&' . $this->prefixId . '[language]=' . $this->piVars['language'];
+			$conf['extraQueryString'] .= '&' . $this->prefixId . '[language]=' . $this->piVars['language'];
 		}
 		if($this->piVars['tag']) {
-			$conf['extraQueryString'] = '&' . $this->prefixId . '[tag]=' . $this->piVars['tag'];
+			$conf['extraQueryString'] .= '&' . $this->prefixId . '[tag]=' . $this->piVars['tag'];
 		}
 		// Get page browser
 		return $this->cObj->cObjGetSingle('USER', $conf);
